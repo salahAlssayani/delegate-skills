@@ -1,0 +1,61 @@
+{
+  "name": "delegate-skills",
+  "version": "1.0.0",
+  "description": "16-skill multi-agent SDLC orchestration platform by Eng. Salah Allsayani",
+  "main": "bin/setup.js",
+  "bin": {
+    "delegate-skills": "./bin/setup.js",
+    "skills": "./bin/setup.js"
+  },
+  "scripts": {
+    "setup": "node bin/setup.js",
+    "postinstall": "node bin/setup.js"
+  },
+  "keywords": [
+    "ai", "ai-agents", "artificial-intelligence", "machine-learning", "llm", "large-language-models",
+    "ai-engineer", "agent-framework", "agent-orchestration", "multi-agent-system", "orchestration",
+    "agent-swarm", "collaborative-ai", "agent-communication",
+    "software-development", "software-engineering", "sdlc", "software-architecture", "system-design",
+    "full-stack", "web-development", "backend", "frontend",
+    "devops", "devops-engineering", "cloud-native", "cloud-computing", "microservices",
+    "containerization", "kubernetes", "ci-cd", "infrastructure-as-code", "deployment",
+    "programming", "models", "ai-models", "token", "tokens", "context-window",
+    "embedding", "vector-database", "rag", "model-serving",
+    "security", "cybersecurity", "information-security", "compliance", "soc2", "gdpr",
+    "hipaa", "pci-dss", "iso27001", "nist", "vulnerability-management", "penetration-testing",
+    "data-engineering", "data-ops", "databases", "data-pipelines", "data-quality",
+    "ml-ops", "data-lineage", "big-data", "analytics",
+    "testing", "quality-assurance", "test-automation", "tdd", "bdd", "unit-testing",
+    "integration-testing", "e2e-testing", "quality-gates", "code-review",
+    "project-management", "agile", "scrum", "kanban", "planning", "roadmap",
+    "stakeholder-management", "risk-management", "budget-tracking",
+    "documentation", "knowledge-base", "technical-writing", "markdown", "wiki", "onboarding",
+    "knowledge-management",
+    "open-source", "open-source-software", "mit-license", "github", "platform",
+    "developer-tools", "automation", "workflow-engine", "skill-management",
+    "agent-health", "context-management", "phase-transition", "technical-debt",
+    "evolution", "refactoring", "deprecation", "cost-optimization", "finops",
+    "experimentation", "a-b-testing", "canary-deployment", "feature-flags",
+    "prompt-engineering", "neural-networks", "agent-health-context-manager"
+  ],
+  "author": "Eng. Salah Allsayani",
+  "email": "eng.salahalssayani@gmail.com",
+  "homepage": "https://github.com/salahAlssayani/delegate-skills",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:salahAlssayani/delegate-skills.git"
+  },
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {},
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/salahAlssayani"
+  },
+  "bugs": {
+    "url": "https://github.com/salahAlssayani/delegate-skills/issues"
+  }
+}

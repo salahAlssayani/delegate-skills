@@ -28,9 +28,36 @@
 
 ---
 
-## ⚡ Terminal Installation
+## ⚡ Installation
 
-Install the Delegate Skills ecosystem directly from your terminal in 3 commands:
+Choose your preferred method below — both install the complete Delegate Skills ecosystem with all 16 skills.
+
+### 🚀 Method 1: npx (Recommended — One Command)
+
+```bash
+# Install and run the Delegate Skills installer
+npx delegate-skills
+
+# Or use the shorthand
+npx skills
+```
+
+This automatically:
+- ✅ Checks for Git and Node.js prerequisites
+- ✅ Clones the latest repository from GitHub
+- ✅ Loads all 16 skill files
+- ✅ Creates a `skills/` symlink
+- ✅ Verifies all files are intact
+- ✅ Prints next-step instructions
+
+**First-time npx** will prompt to install the package — press `y` to confirm.
+
+```bash
+# If you prefer to skip the prompt
+npx --yes delegate-skills
+```
+
+### 📥 Method 2: Git Clone
 
 ```bash
 # 1. Clone the repository
@@ -45,7 +72,19 @@ ls */SKILL.md
 
 That's it — all 16 skill files, LICENSE, CONTRIBUTING.md, and issue templates are now ready.
 
-### Quick Load Command (All Skills)
+### 📦 Method 3: npm Install
+
+```bash
+# Install as a package (runs postinstall automatically)
+npm install delegate-skills
+
+# Or install globally
+npm install -g delegate-skills
+```
+
+---
+
+### 🔧 Post-Installation — Load All Skills
 
 ```bash
 # Load every SKILL.md into your agent system at once
@@ -58,10 +97,9 @@ done
 ### Load Specific Skills
 
 ```bash
-# Load only the skills you need
-cat master-entry-orchestrator/SKILL.md       # Skill 00 (Root)
-cat project-analysis-planning-orchestrator/SKILL.md  # Skill 01
-cat parallel-multi-agent-implementation-orchestrator/SKILL.md  # Skill 02
+cat skills/master-entry-orchestrator/SKILL.md       # Skill 00 (Root)
+cat skills/project-analysis-planning-orchestrator/SKILL.md  # Skill 01
+cat skills/parallel-multi-agent-implementation-orchestrator/SKILL.md  # Skill 02
 ```
 
 ### Verify Installation
@@ -77,6 +115,28 @@ grep "Version:" */SKILL.md | sort
 ```
 
 ### First Agent Declaration
+
+After installation, declare yourself to the system:
+
+```
+COMMAND: DECLARE
+agent_id: DEVELOPER-001
+role: ARCHITECT
+model: gpt-4
+context_window: 128000
+specializations:
+  primary: software-architecture
+  secondary: security
+  tertiary: data-engineering
+capabilities:
+  - 01: 9
+  - 02: 8
+  - 05: 7
+  - 06: 8
+constraints:
+  max_complexity: COMPLEX
+  work_style: COLLABORATIVE
+```
 
 After loading, declare yourself to the system:
 
