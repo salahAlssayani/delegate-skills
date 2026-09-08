@@ -32,32 +32,40 @@
 
 Choose your preferred method below — both install the complete Delegate Skills ecosystem with all 16 skills.
 
-### 🚀 Method 1: npx (Recommended — One Command)
+### 🚀 Method 1: npx from GitHub (Works Now!)
 
 ```bash
-# Install and run the Delegate Skills installer
-npx delegate-skills
+# Run the installer directly from GitHub (no install needed)
+npx github:salahAlssayani/delegate-skills
 
-# Or use the shorthand
-npx skills
+# Or use the shorter form with the package name
+npx -p delegate-skills delegate-skills
 ```
 
 This automatically:
-- ✅ Checks for Git and Node.js prerequisites
 - ✅ Clones the latest repository from GitHub
 - ✅ Loads all 16 skill files
-- ✅ Creates a `skills/` symlink
 - ✅ Verifies all files are intact
+- ✅ Creates a `skills/` symlink
 - ✅ Prints next-step instructions
 
-**First-time npx** will prompt to install the package — press `y` to confirm.
+**Note:** You need Node.js and Git installed. npx will clone the repo to a temporary directory and run the setup script.
+
+### 📦 Method 2: npm Install (Requires Publishing)
 
 ```bash
-# If you prefer to skip the prompt
-npx --yes delegate-skills
+# This requires the package to be published to npm first.
+# To publish: run `npm publish` from the repo directory.
+
+# Install and run
+npx delegate-skills
+
+# Or install globally
+npm install -g delegate-skills
+delegate-skills
 ```
 
-### 📥 Method 2: Git Clone
+### 📥 Method 3: Git Clone
 
 ```bash
 # 1. Clone the repository
@@ -66,21 +74,11 @@ git clone git@github.com:salahAlssayani/delegate-skills.git
 # 2. Navigate into the project
 cd delegate-skills
 
-# 3. Verify all 16 skills are present
-ls */SKILL.md
+# 3. Run the installer
+node bin/setup.js
 ```
 
 That's it — all 16 skill files, LICENSE, CONTRIBUTING.md, and issue templates are now ready.
-
-### 📦 Method 3: npm Install
-
-```bash
-# Install as a package (runs postinstall automatically)
-npm install delegate-skills
-
-# Or install globally
-npm install -g delegate-skills
-```
 
 ---
 

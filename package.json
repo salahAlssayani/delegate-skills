@@ -7,6 +7,13 @@
     "delegate-skills": "./bin/setup.js",
     "skills": "./bin/setup.js"
   },
+  "files": [
+    "bin/",
+    "skills/",
+    "README.md",
+    "LICENSE",
+    "CONTRIBUTING.md"
+  ],
   "scripts": {
     "setup": "node bin/setup.js",
     "postinstall": "node bin/setup.js"

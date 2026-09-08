@@ -1,11 +1,8 @@
 #!/usr/bin/env node
 
-const { execSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 
-const GITHUB_REPO = 'salahAlssayani/delegate-skills';
-const SKILLS_DIR = path.join(process.cwd(), 'skills');
 const COLORS = {
   reset: '\x1b[0m',
   bright: '\x1b[1m',
@@ -23,58 +20,44 @@ function log(message, color = 'reset') {
 function banner() {
   log('╔══════════════════════════════════════════════════════════════╗', 'bright');
   log('║        🚀  DELEGATE SKILLS — INSTALLER v1.0.0  🚀          ║', 'bright');
-  log('║         Multi-Agent SDLC Orchestration Platform            ║', 'bright');
-  log('║              by Eng. Salah Allsayani                       ║', 'bright');
+  log('║         Multi-Agent SDLC Orchestration Platform              ║', 'bright');
+  log('║              by Eng. Salah Allsayani                           ║', 'bright');
+  log('╠══════════════════════════════════════════════════════════════╣', 'bright');
+  log('║  📧 eng.salahalssayani@gmail.com                             ║', 'bright');
+  log('║  🏛️  Taiz University, Alsaeed Faculty of Engineering & IT    ║', 'bright');
+  log('║  🏙️  Taiz, Yemen                                            ║', 'bright');
   log('╚══════════════════════════════════════════════════════════════╝', 'bright');
-  log(`   📧 ${COLORS.cyan}eng.salahalssayani@gmail.com${COLORS.reset}`);
-  log(`   🏛️  ${COLORS.cyan}Taiz University, Alsaeed Faculty of Engineering & IT${COLORS.reset}`);
-  log(`   🏙️  ${COLORS.cyan}Taiz, Yemen${COLORS.reset}`);
   console.log();
 }
 
-function checkPrerequisites() {
-  log('📋 Checking prerequisites...', 'yellow');
+function findRepoRoot() {
+  let dir = process.cwd();
+  while (dir !== path.dirname(dir)) {
+    if (fs.existsSync(path.join(dir, 'master-entry-orchestrator', 'SKILL.md'))) {
+      return dir;
+    }
+    dir = path.dirname(dir);
+  }
+  return null;
+}
 
-  const hasGit = execSync('git --version 2>nul || echo NOT_FOUND', { encoding: 'utf-8' }).trim();
-  if (hasGit.includes('NOT_FOUND')) {
-    log('❌ Git is not installed. Please install Git first.', 'red');
+function install() {
+  banner();
+
+  const repoPath = findRepoRoot();
+
+  if (!repoPath) {
+    log('❌ Could not find Delegate Skills repository.', 'red');
+    log('   Please clone the repo first:', 'yellow');
+    log('   git clone git@github.com:salahAlssayani/delegate-skills.git', 'yellow');
+    log('   cd delegate-skills', 'yellow');
+    log('   npx delegate-skills', 'yellow');
     process.exit(1);
   }
-  log('   ✅ Git found', 'green');
 
-  const hasNode = execSync('node --version 2>nul || echo NOT_FOUND', { encoding: 'utf-8' }).trim();
-  if (hasNode.includes('NOT_FOUND')) {
-    log('❌ Node.js is not installed. Please install Node.js >= 14.', 'red');
-    process.exit(1);
-  }
-  log(`   ✅ Node.js found (${hasNode})`, 'green');
-
+  log(`📁 Repository found at: ${repoPath}`, 'green');
   console.log();
-}
 
-function cloneOrUseLocal() {
-  const localSkillsDir = path.join(process.cwd(), 'master-entry-orchestrator');
-  const hasLocalSkills = fs.existsSync(localSkillsDir);
-
-  if (hasLocalSkills) {
-    log('📁 Local skills found — using existing repository files.', 'cyan');
-    return process.cwd();
-  }
-
-  log('📥 Cloning repository from GitHub...', 'yellow');
-  const targetDir = path.join(process.cwd(), 'delegate-skills');
-
-  if (fs.existsSync(targetDir)) {
-    log('   Repository already exists, pulling latest...', 'cyan');
-    execSync('git pull origin master', { cwd: targetDir, stdio: 'inherit' });
-  } else {
-    execSync(`git clone https://github.com/${GITHUB_REPO}.git`, { stdio: 'inherit' });
-  }
-
-  return path.join(process.cwd(), 'delegate-skills');
-}
-
-function loadAllSkills(repoPath) {
   log('📚 Loading all 16 skills...', 'yellow');
   console.log();
 
@@ -97,7 +80,13 @@ function loadAllSkills(repoPath) {
     { id: '15', name: 'multi-environment-promotion', desc: 'Environment Promotion' },
   ];
 
-  const referenceFiles = ['skill_agent_entry_reference.md', 'README.md', 'LICENSE', 'CONTRIBUTING.md'];
+  const referenceFiles = [
+    'skill_agent_entry_reference.md',
+    'README.md',
+    'LICENSE',
+    'CONTRIBUTING.md',
+    'package.json',
+  ];
 
   let loaded = 0;
 
@@ -120,46 +109,33 @@ function loadAllSkills(repoPath) {
       const size = (content.length / 1024).toFixed(1);
       log(`   ✅ Reference: ${file} (${size} KB)`, 'cyan');
       loaded++;
+    } else {
+      log(`   ⚠️  Reference: ${file} — Not found`, 'yellow');
     }
   });
 
+  const skillCount = skillDirs.length;
   console.log();
-  log(`   📊 Total files loaded: ${loaded}`, 'bright');
-  return loaded;
-}
+  log(`   📊 Skills loaded: ${skillCount}/16`, 'bright');
+  log(`   📊 Reference files loaded: ${referenceFiles.filter(f => fs.existsSync(path.join(repoPath, f))).length}`, 'bright');
+  console.log();
 
-function createSymlink(repoPath) {
-  const skillLink = path.join(process.cwd(), 'skills');
-  if (!fs.existsSync(skillLink)) {
+  log('⚙️  Creating convenience symlink...', 'yellow');
+  const skillsLink = path.join(process.cwd(), 'skills');
+  if (!fs.existsSync(skillsLink)) {
     try {
-      fs.symlinkSync(repoPath, skillLink, 'junction');
-      log(`   ✅ Symlink created: skills → ${repoPath}`, 'green');
+      fs.symlinkSync(repoPath, skillsLink, 'junction');
+      log('   ✅ Symlink created: skills → repo', 'green');
     } catch (e) {
-      log(`   ℹ️  Symlink creation skipped (requires admin): ${e.message}`, 'yellow');
+      log('   ℹ️  Symlink skipped (use the repo path directly)', 'cyan');
     }
+  } else {
+    log('   ℹ️  Symlink already exists', 'cyan');
   }
-}
-
-function setupPostInstall(repoPath) {
-  log('⚙️  Running post-install setup...', 'yellow');
-
-  const packageJsonPath = path.join(repoPath, 'package.json');
-  if (fs.existsSync(packageJsonPath)) {
-    log('   ✅ package.json found', 'green');
-  }
-
-  const skillCount = fs.readdirSync(path.join(repoPath)).filter(
-    (d) => fs.statSync(path.join(repoPath, d)).isDirectory() && fs.existsSync(path.join(repoPath, d, 'SKILL.md'))
-  ).length;
-
-  log(`   ✅ ${skillCount} skill directories verified`, 'green');
 
   console.log();
-}
-
-function printFinalInstructions(repoPath) {
   log('╔══════════════════════════════════════════════════════════════╗', 'bright');
-  log('║                   ✅ INSTALLATION COMPLETE ✅               ║', 'bright');
+  log('║                   ✅ INSTALLATION COMPLETE ✅                  ║', 'bright');
   log('╚══════════════════════════════════════════════════════════════╝', 'bright');
   console.log();
 
@@ -178,24 +154,8 @@ function printFinalInstructions(repoPath) {
   console.log();
 
   log('🔗 Repository:', 'magenta');
-  log(`   https://github.com/${GITHUB_REPO}`, 'magenta');
-  console.log();
-
-  log('📖 Documentation:', 'magenta');
-  log('   cat skills/README.md', 'magenta');
-  log('   cat skills/CONTRIBUTING.md', 'magenta');
+  log('   https://github.com/salahAlssayani/delegate-skills', 'magenta');
   console.log();
 }
 
-function main() {
-  banner();
-  checkPrerequisites();
-
-  const repoPath = cloneOrUseLocal();
-  loadAllSkills(repoPath);
-  createSymlink(repoPath);
-  setupPostInstall(repoPath);
-  printFinalInstructions(repoPath);
-}
-
-main();
+install();
